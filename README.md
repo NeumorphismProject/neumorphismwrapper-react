@@ -29,6 +29,16 @@
 * Web Preview: 
 * Unit Test Coverage: 
 
+# Leran Command
+```shell
+# must init lerna
+npx lerna@latest init
+# add dependency
+npx lerna add terser --scope=neumorphism-preview --dev
+# add local dependency (insert neumorphism-pannel to neumorphism-preview)
+npx lerna add neumorphism-pannel --scope=neumorphism-preview
+```
+
 ## Study From
 * https://github.com/adamgiebl/neumorphism
 

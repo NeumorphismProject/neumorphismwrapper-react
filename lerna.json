@@ -1,12 +1,14 @@
 {
+  "name": "neumorphismwrapper-react",
   "packages": [
     "packages/*"
   ],
-  "useNx": true,
   "version": "0.0.0",
   "command": {
     "run": {
       "npmClient": "yarn"
     }
-  }
+  },
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useWorkspaces": true
 }
