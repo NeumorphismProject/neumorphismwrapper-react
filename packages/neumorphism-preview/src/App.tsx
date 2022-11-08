@@ -1,9 +1,10 @@
 import { useState, useCallback } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
-import NeumorphismPannel from '../../neumorphism-pannel/src/NeumorphismPannel/index'
-import {getNeumorphismStyle} from '../../neumorphism-pannel/src/neumorphism/styleBuilder'
-import {isValidColor} from '../../neumorphism-pannel/src/neumorphism/utils'
+// import NeumorphismPannel from '../../neumorphism-pannel/src/NeumorphismPannel/index'
+// import {getNeumorphismStyle} from '../../neumorphism-pannel/src/neumorphism/styleBuilder'
+// import {isValidColor} from '../../neumorphism-pannel/src/neumorphism/utils'
+import { NeumorphismPannel, getNeumorphismStyle, isValidColor } from 'neumorphism-pannel'
 
 function App() {
   const [color, setColor] = useState<string>('#83abfb');
@@ -12,10 +13,10 @@ function App() {
       setColor(value)
     }
   }
-  const handleColor = useCallback((e:any)=>{
+  const handleColor = useCallback((e: any) => {
     setColor(e.target.value)
   }, [])
-  const neumorphismStyle = getNeumorphismStyle({color});
+  const neumorphismStyle = getNeumorphismStyle({ color });
   const styleForReactString = JSON.stringify(neumorphismStyle, null, '\t')
   return (
     <div className="app" style={{ backgroundColor: color }}>
@@ -43,7 +44,8 @@ function App() {
       <NeumorphismPannel color={color} style={{
         width: '300px',
         height: '300px',
-        margin: '0 auto'}}>
+        margin: '0 auto'
+      }}>
       </NeumorphismPannel>
       <div className='code-view-label'>react style</div>
       <textarea className='code-view'>{styleForReactString}</textarea>
