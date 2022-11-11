@@ -1,5 +1,5 @@
 import { ReactNode, CSSProperties } from 'react';
-import { getNeumorphismStyle, NeumorphismStyleParams } from '../neumorphism/styleBuilder';
+import { getNeumorphismStyle, NeumorphismStyleParams } from '../../neumorphism/styleBuilder';
 
 export interface INeumorphismPannelProps extends NeumorphismStyleParams {
   children?: ReactNode;
