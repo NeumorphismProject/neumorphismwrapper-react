@@ -7,12 +7,10 @@ import typescript from 'rollup-plugin-typescript2'
 import postcss from 'rollup-plugin-postcss'
 import json from '@rollup/plugin-json'
 import babel from '@rollup/plugin-babel'
-// import packageJson from './package.json'
 import dts from 'rollup-plugin-dts'
-import sass from 'sass'
+// import sass from 'sass'
 
-// 入口
-
+// entry
 const entry = 'index.ts'
 const componentsDir = 'src/components'
 const componentsName = fs.readdirSync(path.resolve(componentsDir))
@@ -20,18 +18,18 @@ const componentsEntry = componentsName.map(
   (name) => `${componentsDir}/${name}/index.tsx`
 )
 
-// 环境变量
+// environment
 const isProd = process.env.NODE_ENV === 'production'
 const BABEL_ENV = process.env.BABEL_ENV
 
-// Babel配置
+// Babel config
 const babelOptions = {
   presets: ["@babel/preset-env"],
   extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss'],
   exclude: "**/node_modules/**"
 }
 
-// 通用插件
+// plugins
 const commonPlugins = [
   peerDepsExternal(),
   resolve(),
@@ -39,10 +37,9 @@ const commonPlugins = [
   typescript(),
   babel(babelOptions),
   json(),
-  // dts()
 ]
 
-// 忽略文件
+// ignore
 const externalConfig = [
   id => /\/__expample__|main.tsx/.test(id),
   'react',
@@ -52,37 +49,37 @@ const externalConfig = [
   '**/node_modules/**'
 ]
 
-// sass打包
+// css
 const processScss = function (context) {
   return new Promise((resolve, reject) => {
-    sass.compile(
-      {
-        file: context
-      },
-      function (err, result) {
-        if (!err) {
-          resolve(result)
-        } else {
-          reject(result)
-        }
-      }
-    );
-    sass.compile(context, {}).then(
-      function (output) {
-        if (output && output.css) {
-          resolve(output.css)
-        } else {
-          reject({})
-        }
-      },
-      function (err) {
-        reject(err)
-      }
-    )
+    // sass.compile(
+    //   {
+    //     file: context
+    //   },
+    //   function (err, result) {
+    //     if (!err) {
+    //       resolve(result)
+    //     } else {
+    //       reject(result)
+    //     }
+    //   }
+    // );
+    // sass.compile(context, {}).then(
+    //   function (output) {
+    //     if (output && output.css) {
+    //       resolve(output.css)
+    //     } else {
+    //       reject({})
+    //     }
+    //   },
+    //   function (err) {
+    //     reject(err)
+    //   }
+    // )
   })
 }
 
-// ES Module打包输出
+// ES Module output
 const esmOutput = {
   preserveModules: true,
   // preserveModulesRoot: 'src',
@@ -90,7 +87,7 @@ const esmOutput = {
   assetFileNames: ({ name }) => {
     const { ext, dir, base } = path.parse(name);
     if (ext !== '.css') return '[name].[ext]';
-    // 规范 style 的输出格式
+    // style output on formatter
     return path.join(dir, 'style', base);
   }
 }
