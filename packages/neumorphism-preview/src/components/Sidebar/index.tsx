@@ -25,7 +25,7 @@ export default function Sidebar({ color, onColorChange, styleForReactString,
   const handleColorChange = (e: any) => {
     onColorChange(e.target.value)
   }
-  return <div className="w-full h-full flex flex-col justify-arround p-8 text-white">
+  return <div className="w-full h-full flex flex-col justify-arround p-8 text-white overflow-y-auto">
     <div className="h-16 bg-black p-2">
       <div className="font-bold">Pick a color</div>
       <div>
