@@ -13,11 +13,11 @@ export enum NeumorphismActiveLightSourceType {
   bottomRight = 3,
   bottomLeft = 4
 }
-const NEUMORPHISM_SHAPE = NeumorphismShapeType.flat;
-const ACTIVE_LIGHT_SOURCE = NeumorphismActiveLightSourceType.topLeft;
-const SHADOW_DISTANCE = '20px';
-const SHADOW_BLUR = '30px';
-export const BORDERRADIUS = 50;
+export const NEUMORPHISM_SHAPE = NeumorphismShapeType.flat;
+export const ACTIVE_LIGHT_SOURCE = NeumorphismActiveLightSourceType.topLeft;
+export const SHADOW_DISTANCE = 20;
+export const SHADOW_BLUR = 30;
+export const BORDER_RADIUS = 50;
 
 function getActiveLightSource(activeLightSource: NeumorphismActiveLightSourceType, distance: number) {
   switch (activeLightSource) {
@@ -58,9 +58,9 @@ export interface NeumorphismStyleParams {
   color: string // must hexadecimal (means like #FFFFFF)
   neumorphismShape?: NeumorphismShapeType
   activeLightSource?: NeumorphismActiveLightSourceType
-  shadowDistance?: string;
-  shadowBlur?: string;
-  borderRadiusVal?: number;
+  shadowDistance?: number;
+  shadowBlur?: number;
+  borderRadius?: number;
 }
 export function getNeumorphismStyle({
   color,
@@ -68,26 +68,25 @@ export function getNeumorphismStyle({
   activeLightSource = ACTIVE_LIGHT_SOURCE,
   shadowDistance = SHADOW_DISTANCE,
   shadowBlur = SHADOW_BLUR,
-  borderRadiusVal = BORDERRADIUS }: NeumorphismStyleParams) {
+  borderRadius = BORDER_RADIUS }: NeumorphismStyleParams) {
   // const
   const maxRadius = 150;
   const colorDifference = 0.15;
   // var
-  const shape = neumorphismShape;
-  const radius = borderRadiusVal;
+  const shape = parseInt(neumorphismShape as any, 10);
   let gradient = false;
   if (shape === 2 || shape === 3) {
     gradient = true;
   }
-  const distance = parseInt(shadowDistance.replace('px', ''), 10);
-  const { positionX, positionY, angle } = getActiveLightSource(activeLightSource, distance);
+  const distance = shadowDistance;
+  const { positionX, positionY, angle } = getActiveLightSource(parseInt(activeLightSource as any, 10), distance);
   const firstGradientColor = gradient && shape !== 1 ? colorLuminance(color, shape === 3 ? 0.07 : -0.1) : color;
   const secondGradientColor = gradient && shape !== 1 ? colorLuminance(color, shape === 2 ? 0.07 : -0.1) : color;
-  const blur = parseInt(shadowBlur.replace('px', ''), 10);
+  const blur = shadowBlur;
   const darkColor = colorLuminance(color, colorDifference * -1);
   const lightColor = colorLuminance(color, colorDifference);
   // key code
-  const borderRadius = radius >= maxRadius ? '50%' : radius + 'px';
+  const borderRadiusVal = borderRadius >= maxRadius ? '50%' : borderRadius + 'px';
   const background = gradient && shape !== 1
     ? `linear-gradient(${angle}deg, ${firstGradientColor}, ${secondGradientColor})`
     : `${color}`;
@@ -96,7 +95,7 @@ export function getNeumorphismStyle({
   const secondBoxShadow = `${boxShadowPosition} ${positionX * -1}px ${positionY * -1}px ${blur}px ${lightColor}`;
 
   const styleObj = {
-    borderRadius: borderRadius,
+    borderRadius: borderRadiusVal,
     background: background,
     boxShadow: `${firstBoxShadow},${secondBoxShadow}`
   };
