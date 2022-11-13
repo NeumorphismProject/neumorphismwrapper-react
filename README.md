@@ -2,7 +2,7 @@
 
 ## Preview
 
-* Web Preview: https://neumorphismwrapper-react-8wx6lr0i1-qukadmin.vercel.app/
+* Web Preview: https://neumorphismwrapper-react-neumorphism-pannel.vercel.app/
 
 ## Enviroment Needs
 
