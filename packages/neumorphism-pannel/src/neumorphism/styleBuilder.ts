@@ -15,9 +15,10 @@ export enum NeumorphismActiveLightSourceType {
 }
 export const NEUMORPHISM_SHAPE = NeumorphismShapeType.flat;
 export const ACTIVE_LIGHT_SOURCE = NeumorphismActiveLightSourceType.topLeft;
-export const SHADOW_DISTANCE = 20;
-export const SHADOW_BLUR = 30;
+export const SHADOW_DISTANCE = 10;
 export const BORDER_RADIUS = 50;
+export const BORDER_RADIUS_MAX = 150;
+export const COLOR_DIFFERENCE = 0.5;
 
 function getActiveLightSource(activeLightSource: NeumorphismActiveLightSourceType, distance: number) {
   switch (activeLightSource) {
@@ -59,19 +60,24 @@ export interface NeumorphismStyleParams {
   neumorphismShape?: NeumorphismShapeType
   activeLightSource?: NeumorphismActiveLightSourceType
   shadowDistance?: number;
-  shadowBlur?: number;
+  shadowBlur?: number; // default: shadowDistance * 2. If you would like to get pretty style, do not set this value. 
   borderRadius?: number;
+  borderRadiusMax?: number;
+  colorDifference?: number;
 }
 export function getNeumorphismStyle({
   color,
   neumorphismShape = NEUMORPHISM_SHAPE,
   activeLightSource = ACTIVE_LIGHT_SOURCE,
   shadowDistance = SHADOW_DISTANCE,
-  shadowBlur = SHADOW_BLUR,
-  borderRadius = BORDER_RADIUS }: NeumorphismStyleParams) {
+  shadowBlur,
+  borderRadius = BORDER_RADIUS,
+  borderRadiusMax = BORDER_RADIUS_MAX,
+  colorDifference = COLOR_DIFFERENCE }: NeumorphismStyleParams) {
   // const
-  const maxRadius = 150;
-  const colorDifference = 0.15;
+  // const maxRadius = 150;
+  // const colorDifference = 0.15;
+
   // var
   const shape = parseInt(neumorphismShape as any, 10);
   let gradient = false;
@@ -82,11 +88,11 @@ export function getNeumorphismStyle({
   const { positionX, positionY, angle } = getActiveLightSource(parseInt(activeLightSource as any, 10), distance);
   const firstGradientColor = gradient && shape !== 1 ? colorLuminance(color, shape === 3 ? 0.07 : -0.1) : color;
   const secondGradientColor = gradient && shape !== 1 ? colorLuminance(color, shape === 2 ? 0.07 : -0.1) : color;
-  const blur = shadowBlur;
+  const blur = !shadowBlur ? shadowDistance * 2 : shadowBlur;
   const darkColor = colorLuminance(color, colorDifference * -1);
   const lightColor = colorLuminance(color, colorDifference);
   // key code
-  const borderRadiusVal = borderRadius >= maxRadius ? '50%' : borderRadius + 'px';
+  const borderRadiusVal = borderRadius >= borderRadiusMax ? '50%' : borderRadius + 'px';
   const background = gradient && shape !== 1
     ? `linear-gradient(${angle}deg, ${firstGradientColor}, ${secondGradientColor})`
     : `${color}`;
