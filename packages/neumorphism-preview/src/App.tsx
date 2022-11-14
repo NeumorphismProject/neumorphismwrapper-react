@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo } from "react"
 import {
   getNeumorphismStyle, isValidColor,
   NeumorphismShapeType, NeumorphismActiveLightSourceType,
-  NEUMORPHISM_SHAPE, ACTIVE_LIGHT_SOURCE, SHADOW_DISTANCE, SHADOW_BLUR, BORDER_RADIUS
+  BOX_SIZE, NEUMORPHISM_SHAPE, ACTIVE_LIGHT_SOURCE, SHADOW_DISTANCE, BORDER_RADIUS, COLOR_DIFFERENCE
 } from "neumorphism-pannel"
 import Sidebar from "./components/Sidebar"
 import Preview from "./components/Preview"
@@ -25,11 +25,17 @@ function App() {
     setActiveLightSource(activeLightSource)
   }
 
+  const [boxSize, setBoxSize] = useState<number>(BOX_SIZE)
+  const handleBoxSizeChange = (newValue: number) => {
+    setBoxSize(newValue)
+  }
+
   const [shadowDistance, setShadowDistance] = useState<number>(SHADOW_DISTANCE)
   const handleShadowDistanceChange = (newValue: number) => {
     setShadowDistance(newValue)
+    setShadowBlur(newValue * 2)
   }
-  const [shadowBlur, setShadowBlur] = useState<number>(SHADOW_BLUR)
+  const [shadowBlur, setShadowBlur] = useState<number>(SHADOW_DISTANCE * 2)
   const handleShadowBlurChange = (newValue: number) => {
     setShadowBlur(newValue)
   }
@@ -37,10 +43,15 @@ function App() {
   const handleBorderRadiusChange = (newValue: number) => {
     setBorderRadius(newValue)
   }
+  const [colorDifferenceVal, setColorDifferenceVal] = useState<number>(COLOR_DIFFERENCE * 100)
+  const handleColorDifferenceChange = (newValue: number) => {
+    setColorDifferenceVal(newValue)
+  }
+  const colorDifference = useMemo(() => colorDifferenceVal / 100, [colorDifferenceVal])
 
   // const neumorphismStyle = getNeumorphismStyle({ color, shadowDistance });
-  const neumorphismStyle = useMemo(() => getNeumorphismStyle({ color, neumorphismShape, activeLightSource, shadowDistance, shadowBlur, borderRadius }),
-    [color, neumorphismShape, activeLightSource, shadowDistance, shadowBlur, borderRadius])
+  const neumorphismStyle = useMemo(() => getNeumorphismStyle({ color, neumorphismShape, activeLightSource, shadowDistance, shadowBlur, borderRadius, colorDifference }),
+    [color, neumorphismShape, activeLightSource, shadowDistance, shadowBlur, borderRadius, colorDifference])
   // const styleForReactString = JSON.stringify(neumorphismStyle, null, "\t")
   const styleForReactString = useMemo(() => JSON.stringify(neumorphismStyle, null, "\t"),
     [neumorphismStyle, shadowDistance])
@@ -63,17 +74,21 @@ function App() {
         <Sidebar color={color} onColorChange={handleColorChange} styleForReactString={styleForReactString}
           neumorphismShape={neumorphismShape} onNeumorphismShapeChange={handleNeumorphismShapeChange}
           activeLightSource={activeLightSource} onActiveLightSourceChange={handleActiveLightSourceChange}
+          boxSize={boxSize} onBoxSizeChange={handleBoxSizeChange}
           shadowDistance={shadowDistance} onShadowDistanceChange={handleShadowDistanceChange}
           shadowBlur={shadowBlur} onShadowBlurChange={handleShadowBlurChange}
-          borderRadius={borderRadius} onBorderRadiusChange={handleBorderRadiusChange} />
+          borderRadius={borderRadius} onBorderRadiusChange={handleBorderRadiusChange}
+          colorDifference={colorDifferenceVal} onColorDifferenceChange={handleColorDifferenceChange} />
       </div>
       <div className="flex-1 flex flex-col justify-center">
         <Preview color={color}
           neumorphismShape={neumorphismShape}
           activeLightSource={activeLightSource}
+          boxSize={boxSize}
           shadowDistance={shadowDistance}
           shadowBlur={shadowBlur}
-          borderRadius={borderRadius} />
+          borderRadius={borderRadius}
+          colorDifference={colorDifference} />
       </div>
     </div>
   )

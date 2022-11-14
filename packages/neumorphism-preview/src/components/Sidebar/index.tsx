@@ -1,30 +1,42 @@
-import React from "react";
-import { NeumorphismStyleParams, NeumorphismShapeType, NeumorphismActiveLightSourceType } from "neumorphism-pannel"
+import { useMemo } from "react";
+import { NeumorphismStyleParams, NeumorphismShapeType, NeumorphismActiveLightSourceType, BORDER_RADIUS_MAX } from "neumorphism-pannel"
 import Slider from '@mui/material/Slider'
 import ValueSlider from '../ValueSlider'
 import TypeRadioGroup from '../TypeRadioGroup'
 
+const shadowDistanceMax = 100
+
 export interface SidebarProps extends NeumorphismStyleParams {
   onColorChange: (colorHex: string) => void
   styleForReactString: string
+  boxSize?: number
+  onBoxSizeChange?: (newValue: number) => void
   onNeumorphismShapeChange?: (neumorphismShape: NeumorphismShapeType) => void
   onActiveLightSourceChange?: (activeLightSource: NeumorphismActiveLightSourceType) => void
   onShadowDistanceChange?: (newValue: number) => void
   onShadowBlurChange?: (newValue: number) => void
   onBorderRadiusChange?: (newValue: number) => void
+  onColorDifferenceChange?: (newValue: number) => void
 }
 export default function Sidebar({ color, onColorChange, styleForReactString,
+  boxSize,
+  onBoxSizeChange,
   neumorphismShape,
   onNeumorphismShapeChange,
   activeLightSource,
   onActiveLightSourceChange,
-  shadowDistance, shadowBlur, borderRadius,
+  shadowDistance,
   onShadowDistanceChange,
+  shadowBlur,
   onShadowBlurChange,
-  onBorderRadiusChange }: SidebarProps) {
+  borderRadius,
+  onBorderRadiusChange,
+  colorDifference,
+  onColorDifferenceChange }: SidebarProps) {
   const handleColorChange = (e: any) => {
     onColorChange(e.target.value)
   }
+  const shadowBlurMax = useMemo(() => (shadowDistanceMax || 0) * 2, [shadowDistanceMax])
   return <div className="w-full h-full flex flex-col justify-arround p-8 text-white overflow-y-auto">
     <div className="h-16 bg-black p-2">
       <div className="font-bold">Pick a color</div>
@@ -77,9 +89,11 @@ export default function Sidebar({ color, onColorChange, styleForReactString,
         ]}
         onChange={onNeumorphismShapeChange}
       />
-      <ValueSlider label="Shadow Distance" value={shadowDistance} onChange={onShadowDistanceChange} />
-      <ValueSlider label="Shadow Blur" value={shadowBlur} onChange={onShadowBlurChange} />
-      <ValueSlider label="Border Radius" value={borderRadius} onChange={onBorderRadiusChange} />
+      <ValueSlider label="Box Size" value={boxSize} onChange={onBoxSizeChange} max={500} />
+      <ValueSlider label="Shadow Distance" value={shadowDistance} onChange={onShadowDistanceChange} max={shadowDistanceMax} />
+      <ValueSlider label="Shadow Blur" value={shadowBlur} onChange={onShadowBlurChange} max={shadowBlurMax} />
+      <ValueSlider label="Border Radius" value={borderRadius} onChange={onBorderRadiusChange} max={BORDER_RADIUS_MAX} />
+      <ValueSlider label="Light Intensity" value={colorDifference} onChange={onColorDifferenceChange} />
     </div>
   </div>
 }
