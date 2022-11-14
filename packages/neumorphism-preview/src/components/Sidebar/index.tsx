@@ -1,14 +1,15 @@
 import { useMemo } from "react";
 import { NeumorphismStyleParams, NeumorphismShapeType, NeumorphismActiveLightSourceType, BORDER_RADIUS_MAX } from "neumorphism-pannel"
-import Slider from '@mui/material/Slider'
 import ValueSlider from '../ValueSlider'
 import TypeRadioGroup from '../TypeRadioGroup'
+import StyleCodeArea from '../StyleCodeArea'
 
 const shadowDistanceMax = 100
 
 export interface SidebarProps extends NeumorphismStyleParams {
   onColorChange: (colorHex: string) => void
   styleForReactString: string
+  styleForCssString: string
   boxSize?: number
   onBoxSizeChange?: (newValue: number) => void
   onNeumorphismShapeChange?: (neumorphismShape: NeumorphismShapeType) => void
@@ -18,7 +19,7 @@ export interface SidebarProps extends NeumorphismStyleParams {
   onBorderRadiusChange?: (newValue: number) => void
   onColorDifferenceChange?: (newValue: number) => void
 }
-export default function Sidebar({ color, onColorChange, styleForReactString,
+export default function Sidebar({ color, onColorChange, styleForReactString, styleForCssString,
   boxSize,
   onBoxSizeChange,
   neumorphismShape,
@@ -62,8 +63,8 @@ export default function Sidebar({ color, onColorChange, styleForReactString,
     </div>
     {/* ------ style code textarea ------ */}
     <div className="w-full mb-6">
-      <div className="font-bold bg-black p-2">React style</div>
-      <textarea readOnly className="w-full h-44 bg-black p-2" value={styleForReactString}></textarea>
+      <StyleCodeArea styleForReactString={styleForReactString}
+        styleForCssString={styleForCssString} />
     </div>
     {/* ------ silder ------ */}
     <div className="flex-1 w-full bg-black p-2">

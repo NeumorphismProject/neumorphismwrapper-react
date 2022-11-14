@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from "react"
 import {
+  StyleCodeType,
   getNeumorphismStyle, isValidColor,
   NeumorphismShapeType, NeumorphismActiveLightSourceType,
   BOX_SIZE, NEUMORPHISM_SHAPE, ACTIVE_LIGHT_SOURCE, SHADOW_DISTANCE, BORDER_RADIUS, COLOR_DIFFERENCE
@@ -56,6 +57,11 @@ function App() {
   const styleForReactString = useMemo(() => JSON.stringify(neumorphismStyle, null, "\t"),
     [neumorphismStyle, shadowDistance])
 
+  const neumorphismCssStyle = useMemo(() => getNeumorphismStyle({ styleCodeType: StyleCodeType.css, color, neumorphismShape, activeLightSource, shadowDistance, shadowBlur, borderRadius, colorDifference }),
+    [color, neumorphismShape, activeLightSource, shadowDistance, shadowBlur, borderRadius, colorDifference])
+  const styleForCssString = useMemo(() => JSON.stringify(neumorphismCssStyle, null, "\t"),
+    [neumorphismCssStyle, shadowDistance])
+
   return (
     <div className="w-screen h-screen flex p-10" style={{ backgroundColor: color }}>
       <div className="absolute top-6 right-6 h-16 text-white flex flex-col">
@@ -71,7 +77,8 @@ function App() {
 
       </div>
       <div className="w-96 h-full" style={neumorphismStyle}>
-        <Sidebar color={color} onColorChange={handleColorChange} styleForReactString={styleForReactString}
+        <Sidebar color={color} onColorChange={handleColorChange}
+          styleForReactString={styleForReactString} styleForCssString={styleForCssString}
           neumorphismShape={neumorphismShape} onNeumorphismShapeChange={handleNeumorphismShapeChange}
           activeLightSource={activeLightSource} onActiveLightSourceChange={handleActiveLightSourceChange}
           boxSize={boxSize} onBoxSizeChange={handleBoxSizeChange}

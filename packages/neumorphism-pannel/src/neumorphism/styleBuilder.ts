@@ -55,7 +55,12 @@ function getActiveLightSource(activeLightSource: NeumorphismActiveLightSourceTyp
   }
 }
 
+export enum StyleCodeType {
+  css = 1,
+  reactStyle = 2
+}
 export interface NeumorphismStyleParams {
+  styleCodeType?: StyleCodeType
   color: string // must hexadecimal (means like #FFFFFF)
   neumorphismShape?: NeumorphismShapeType
   activeLightSource?: NeumorphismActiveLightSourceType
@@ -66,6 +71,7 @@ export interface NeumorphismStyleParams {
   colorDifference?: number;
 }
 export function getNeumorphismStyle({
+  styleCodeType = StyleCodeType.reactStyle,
   color,
   neumorphismShape = NEUMORPHISM_SHAPE,
   activeLightSource = ACTIVE_LIGHT_SOURCE,
@@ -100,11 +106,23 @@ export function getNeumorphismStyle({
   const firstBoxShadow = `${boxShadowPosition} ${positionX}px ${positionY}px ${blur}px ${darkColor}`;
   const secondBoxShadow = `${boxShadowPosition} ${positionX * -1}px ${positionY * -1}px ${blur}px ${lightColor}`;
 
-  const styleObj = {
-    borderRadius: borderRadiusVal,
-    background: background,
-    boxShadow: `${firstBoxShadow},${secondBoxShadow}`
-  };
+  let styleObj: any = {};
+  switch (styleCodeType) {
+    case StyleCodeType.css:
+      styleObj = {
+        'border-radius': borderRadiusVal,
+        'background': background,
+        'box-shadow': `${firstBoxShadow},${secondBoxShadow}`
+      }
+      break
+    default: // StyleCodeType.reactStyle
+      styleObj = {
+        borderRadius: borderRadiusVal,
+        background: background,
+        boxShadow: `${firstBoxShadow},${secondBoxShadow}`
+      }
+      break
+  }
 
   return styleObj;
 }
