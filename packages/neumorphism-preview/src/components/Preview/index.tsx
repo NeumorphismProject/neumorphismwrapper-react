@@ -1,13 +1,13 @@
-import React from "react";
-import { NeumorphismPannel, getNeumorphismStyle, isValidColor, NeumorphismStyleParams } from "neumorphism-pannel"
+import { NeumorphismPannel, NeumorphismStyleParams } from 'neumorphism-pannel';
 
 export interface PreviewProps extends NeumorphismStyleParams {
   boxSize?: number
 }
 export default function Preview(props: PreviewProps) {
-  return <NeumorphismPannel {...props}
+  return <NeumorphismPannel
+    {...props}
     style={{
-      margin: "0 auto"
-    }}>
-  </NeumorphismPannel>
+      margin: '0 auto'
+    }}
+  />;
 }
