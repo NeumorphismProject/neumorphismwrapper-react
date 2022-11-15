@@ -5,4 +5,3 @@ export * from './components/NeumorphismPannel';
 
 export * from './neumorphism/styleBuilder';
 export * from './neumorphism/utils';
-export * from './components/NeumorphismPannel';

@@ -65,7 +65,7 @@ export interface NeumorphismStyleParams {
   neumorphismShape?: NeumorphismShapeType
   activeLightSource?: NeumorphismActiveLightSourceType
   shadowDistance?: number;
-  shadowBlur?: number; // default: shadowDistance * 2. If you would like to get pretty style, do not set this value. 
+  shadowBlur?: number; // default: shadowDistance * 2. If you would like to get pretty style, do not set this value.
   borderRadius?: number;
   borderRadiusMax?: number;
   colorDifference?: number;
@@ -111,17 +111,17 @@ export function getNeumorphismStyle({
     case StyleCodeType.css:
       styleObj = {
         'border-radius': borderRadiusVal,
-        'background': background,
+        background: background,
         'box-shadow': `${firstBoxShadow},${secondBoxShadow}`
-      }
-      break
+      };
+      break;
     default: // StyleCodeType.reactStyle
       styleObj = {
         borderRadius: borderRadiusVal,
         background: background,
         boxShadow: `${firstBoxShadow},${secondBoxShadow}`
-      }
-      break
+      };
+      break;
   }
 
   return styleObj;
