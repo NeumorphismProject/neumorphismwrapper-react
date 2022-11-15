@@ -1,5 +1,31 @@
 # Neumorphism Pannel (Working on deving...)
 
+## Start Project
+
+```shell
+# install in root Dir
+yarn
+# build component lib
+cd packages/neumorphism-pannel
+yarn build
+# build preview
+cd neumorphism-preview
+yarn build
+# start preview
+cd neumorphism-preview
+yarn dev
+```
+
+## Git Rules
+
+* [1] -- Branch Rule (branchnamelint.json)
+* * branch name: prefixes/featureName
+* * * Example: feature/cleancode
+
+* [2] -- Commit Rule (commitlint.config.js)
+* * commit command: git commit -m "prefixes: message"
+* * * Example: git commit -m "feat: clean code"
+
 ## Preview
 
 * Web Preview: https://neumorphismwrapper-react-neumorphism-pannel.vercel.app/
@@ -13,12 +39,13 @@
 * React 18
 * Typescript 4
 * Tailwind CSS
+* components lib tool: rollup
 * Vite 3: include .env
-* Lint: eslint + stylelint
+* Lint: eslint
 * git hooks: husky
+* git branch checker: branch-name-lint
 * git commit formatter: commitlint
 * Unit test: Vitest 3 + VitestUI + @vitest/coverage-c8 + @testing-library/react + @testing-library/jest-dom
-* mock
 * CI&CD: https://vercel.com/
 
 
@@ -26,10 +53,10 @@
 * It will just check file that is edited this time in lint-stage hooks.
 
 ## Preview (By vercel CI&CD)
-* Web Preview: 
+* Web Preview: https://neumorphismwrapper-react-neumorphism-pannel.vercel.app/
 * Unit Test Coverage: 
 
-# Leran Command
+# Leran Command Example
 ```shell
 # must init lerna
 npx lerna@latest init
