@@ -1,18 +1,25 @@
-import { ISidebarMenuGroup, ISidebarMenuItem } from '../TreeMenu/menuIcons';
+import { ISidebarMenuGroup, ISidebarMenuItem } from '@/components/TreeMenu/menuIcons';
 
 // ------------------------------- sidebar menu -----------------------------------------------
+export enum MuiComponentType {
+  MuiButton = 'MuiButton'
+}
 
-const group1Items: ISidebarMenuItem[] = [
+export function valueOfMuiComponentType() {
+  return MuiComponentType.MuiButton;
+}
+
+const baseItems: ISidebarMenuItem[] = [
   {
     nodeId: '1',
-    labelText: 'Base',
+    labelText: 'MUI Base',
     labelIconName: 'DonutSmall',
     children: [
       {
-        nodeId: '11',
+        nodeId: MuiComponentType.MuiButton,
         labelText: 'Button',
         labelIconName: 'Badge',
-        labelInfo: '90'
+        routePath: 'Button'
       }
     ]
   }
@@ -23,6 +30,6 @@ export const muiMenu: ISidebarMenuGroup[] = [
     nodeId: 'mui',
     groupTitle: 'Material UI',
     groupCaption: 'MUI',
-    children: group1Items
+    children: baseItems
   }
 ];

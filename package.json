@@ -12,6 +12,7 @@
   "scripts": {
     "start": "yarn workspace neumorphism-preview dev",
     "build:preview": "yarn workspace neumorphism-preview build",
+    "build:all-lib": "yarn workspace neumorphism-style-builder build & yarn workspace neumorphism-pannel build & yarn workspace neumorphism-materialui-theme build",
     "lint:eslint": "eslint \"**/*.{jsx,js,tsx,ts}\" --fix",
     "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.json",
     "lint:branch": "branch-name-lint ./branchnamelint.json",

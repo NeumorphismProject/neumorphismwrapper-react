@@ -35,7 +35,6 @@ export interface ISidebarMenuItemChild {
   nodeId: string;
   labelText: string;
   labelIconName?: keyof typeof menuIcons;
-  labelInfo?: string;
   routePath?: string;
 }
 
