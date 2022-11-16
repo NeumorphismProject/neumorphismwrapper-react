@@ -7,6 +7,7 @@ import {
 } from 'neumorphism-pannel';
 import Sidebar from './components/Sidebar';
 import Preview from './components/Preview';
+import UiSelector from './components/UiSelector';
 
 function App() {
   const [color, setColor] = useState<string>('#27282b');
@@ -84,7 +85,6 @@ function App() {
           <span className="mr-2">Github repo:</span>
           <a style={{ textDecoration: 'underline' }} href="https://github.com/adamgiebl/neumorphism" target="_blank" rel="noreferrer">https://github.com/adamgiebl/neumorphism</a>
         </div>
-
       </div>
       <div className="h-full w-96" style={neumorphismStyle}>
         <Sidebar
@@ -107,6 +107,9 @@ function App() {
           colorDifference={colorDifferenceVal}
           onColorDifferenceChange={handleColorDifferenceChange}
         />
+      </div>
+      <div>
+        <UiSelector />
       </div>
       <div className="flex flex-1 flex-col justify-center">
         <Preview
