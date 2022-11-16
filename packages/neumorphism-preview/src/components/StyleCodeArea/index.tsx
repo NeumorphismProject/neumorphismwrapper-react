@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { StyleCodeType } from 'neumorphism-pannel';
-import TypeRadioGroup from '../TypeRadioGroup';
+import TypeRadioGroup from '@/components/TypeRadioGroup';
 
 export interface StyleCodeAreaProps {
   styleForReactString: string

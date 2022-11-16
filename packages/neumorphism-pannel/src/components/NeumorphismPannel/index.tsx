@@ -1,5 +1,5 @@
 import { ReactNode, CSSProperties } from 'react';
-import { getNeumorphismStyle, NeumorphismStyleParams } from '../../neumorphism/styleBuilder';
+import { getNeumorphismStyle, NeumorphismStyleParams } from 'neumorphism-style-builder';
 
 export const BOX_SIZE = 300;
 export interface INeumorphismPannelProps extends NeumorphismStyleParams {

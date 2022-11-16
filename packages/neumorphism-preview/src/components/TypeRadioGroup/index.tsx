@@ -1,10 +1,8 @@
 import React from 'react';
-import { NeumorphismShapeType } from 'neumorphism-pannel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 
 export interface TypeRadioOption {
   radioKey: any
@@ -31,9 +29,9 @@ export default function TypeRadioGroup({ label, value, options, onChange }: Type
           sx={{ display: 'flex', justifyContent: 'space-between' }}
         >
           {(Array.isArray(options) && options.length > 0)
-          && options.map((opt: TypeRadioOption) => (
-            <FormControlLabel key={`typeradio-${opt.radioKey}`} value={opt.radioKey} control={<Radio />} label={opt.radioText} />
-          ))}
+            && options.map((opt: TypeRadioOption) => (
+              <FormControlLabel key={`typeradio-${opt.radioKey}`} value={opt.radioKey} control={<Radio />} label={opt.radioText} />
+            ))}
         </RadioGroup>
       </FormControl>
     </div>

@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { NeumorphismStyleParams, NeumorphismShapeType, NeumorphismActiveLightSourceType, BORDER_RADIUS_MAX } from 'neumorphism-pannel';
-import ValueSlider from '../ValueSlider';
-import TypeRadioGroup from '../TypeRadioGroup';
-import StyleCodeArea from '../StyleCodeArea';
+import ValueSlider from '@/components/ValueSlider';
+import TypeRadioGroup from '@/components/TypeRadioGroup';
+import StyleCodeArea from '@/components/StyleCodeArea';
 
 const shadowDistanceMax = 100;
 

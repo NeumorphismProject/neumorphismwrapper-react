@@ -1,18 +1,16 @@
 {
-  "name": "neumorphism-pannel",
+  "name": "neumorphism-style-builder",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "cross-env NODE_ENV=production BABEL_ENV=esm rollup -c",
-    "build:vite": "tsc && vite build"
+    "build": "cross-env NODE_ENV=production BABEL_ENV=esm rollup -c"
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "neumorphism-style-builder": "^0.0.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
