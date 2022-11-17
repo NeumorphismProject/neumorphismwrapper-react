@@ -67,8 +67,8 @@ export interface NeumorphismReactStyle {
 }
 
 export enum StyleCodeType {
-  css = 1,
-  reactStyle = 2
+  css = 'css',
+  reactStyle = 'reactStyle'
 }
 export interface NeumorphismStyleParams {
   styleCodeType?: StyleCodeType

@@ -1,5 +1,10 @@
 import { useState, useCallback, useMemo } from 'react';
 import {
+  MuiComponentType, MuiComponentDefaultSize,
+  muiButtonDefaultSize, muiButtonPrettyConfiguration
+} from 'neumorphism-materialui-theme';
+import {
+  NeumorphismStyleParams,
   StyleCodeType,
   getNeumorphismStyle, isValidColor,
   NeumorphismShapeType, NeumorphismActiveLightSourceType,
@@ -10,9 +15,12 @@ import Preview from '@/components/Preview';
 import UiSelector from '@/components/UiSelector';
 import { ISelectedAppMenuItem } from '@/components/TreeMenu';
 import { PreviewComponentType } from '@/components/UiSelector/menu';
-import { MuiComponentType } from '@/components/UiSelector/muiMenu';
+
+export interface ResetConfigurationParams extends MuiComponentDefaultSize, NeumorphismStyleParams { }
 
 function Board() {
+  let configurationRecorder: any = {};
+
   const [color, setColor] = useState<string>('#27282b');
   const handleColorChange = (colorHex: string) => {
     if (isValidColor(colorHex)) {
@@ -80,15 +88,89 @@ function Board() {
     [neumorphismCssStyle, shadowDistance]
   );
 
+  const pannelProps = useMemo(() => ({
+    boxWidth,
+    boxHeight,
+    color,
+    neumorphismShape,
+    activeLightSource,
+    shadowDistance,
+    shadowBlur,
+    borderRadius,
+    colorDifference
+  }), [boxWidth,
+    boxHeight,
+    color,
+    neumorphismShape,
+    activeLightSource,
+    shadowDistance,
+    shadowBlur,
+    borderRadius,
+    colorDifference]);
+  const configurationString = useMemo(
+    () => JSON.stringify(pannelProps, null, '\t'),
+    [pannelProps]
+  );
+
   // -------- UI Selector --------
-  const [previewType, setPreviewType] = useState<PreviewComponentType | MuiComponentType>(PreviewComponentType.NormalBox);
-  const handleMuiComponentsSelected = (selectedItem: ISelectedAppMenuItem) => {
-    if (selectedItem.childItem && Object.keys(selectedItem.childItem).length > 0) {
-      setPreviewType(selectedItem.childItem.nodeId as any);
-    } else {
-      setPreviewType(selectedItem.nodeItem.nodeId as any);
+  function resetConfiguration(configuration: ResetConfigurationParams) {
+    const {
+      boxWidth,
+      boxHeight,
+      color,
+      shadowDistance,
+      shadowBlur,
+      borderRadius,
+      colorDifference
+    } = configuration;
+    if (boxWidth) {
+      setBoxWidth(boxWidth);
     }
-  };
+    if (boxHeight) {
+      setBoxHeight(boxHeight);
+    }
+    if (color) {
+      setColor(color);
+    }
+    if (shadowDistance) {
+      setShadowDistance(shadowDistance);
+    }
+    if (shadowBlur) {
+      setShadowBlur(shadowBlur);
+    }
+    if (borderRadius) {
+      setBorderRadius(borderRadius);
+    }
+    if (colorDifference) {
+      setColorDifferenceVal(colorDifference * 100);
+    }
+  }
+  const [previewType, setPreviewType] = useState<PreviewComponentType | MuiComponentType>(PreviewComponentType.NormalBox);
+  const handleMuiComponentsSelected = useCallback((selectedItem: ISelectedAppMenuItem) => {
+    configurationRecorder = {
+      boxWidth,
+      boxHeight,
+      color,
+      neumorphismShape,
+      activeLightSource,
+      shadowDistance,
+      shadowBlur,
+      borderRadius,
+      colorDifference
+    };
+    let previewType: any;
+    if (selectedItem.childItem && Object.keys(selectedItem.childItem).length > 0) {
+      previewType = selectedItem.childItem.nodeId;
+    } else {
+      previewType = selectedItem.nodeItem.nodeId;
+    }
+    if (previewType === MuiComponentType.MuiButton) {
+      resetConfiguration({ ...muiButtonDefaultSize, ...muiButtonPrettyConfiguration });
+    } else if (previewType === PreviewComponentType.NormalBox) {
+      resetConfiguration(configurationRecorder);
+    }
+    setPreviewType(previewType);
+  }, []);
 
   return (
     <div className="flex h-screen w-screen p-10" style={{ backgroundColor: color }}>
@@ -109,6 +191,7 @@ function Board() {
           onColorChange={handleColorChange}
           styleForReactString={styleForReactString}
           styleForCssString={styleForCssString}
+          configurationString={configurationString}
           neumorphismShape={neumorphismShape}
           onNeumorphismShapeChange={handleNeumorphismShapeChange}
           activeLightSource={activeLightSource}
@@ -133,17 +216,7 @@ function Board() {
       <div className="flex flex-1 flex-col justify-center">
         <Preview
           previewType={previewType}
-          pannelProps={{
-            boxWidth,
-            boxHeight,
-            color,
-            neumorphismShape,
-            activeLightSource,
-            shadowDistance,
-            shadowBlur,
-            borderRadius,
-            colorDifference
-          }}
+          pannelProps={pannelProps}
         />
       </div>
     </div>
