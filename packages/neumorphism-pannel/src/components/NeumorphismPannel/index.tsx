@@ -3,20 +3,22 @@ import { getNeumorphismStyle, NeumorphismStyleParams } from 'neumorphism-style-b
 
 export const BOX_SIZE = 300;
 export interface INeumorphismPannelProps extends NeumorphismStyleParams {
-  boxSize?: number
+  boxWidth?: number
+  boxHeight?: number
   children?: ReactNode
   className?: string
   style?: CSSProperties
 }
 export default function NeumorphismPannel({
-  boxSize = BOX_SIZE,
+  boxWidth = BOX_SIZE,
+  boxHeight = BOX_SIZE,
   children,
   className,
   style,
   ...props
 }: INeumorphismPannelProps) {
   const neumorphismStyle = getNeumorphismStyle(props);
-  const combinStyle = Object.assign(neumorphismStyle, { width: `${boxSize}px`, height: `${boxSize}px` }, style || {});
+  const combinStyle = Object.assign(neumorphismStyle, { width: `${boxWidth}px`, height: `${boxHeight}px` }, style || {});
   return (
     <div className={className} style={combinStyle}>
       {children}

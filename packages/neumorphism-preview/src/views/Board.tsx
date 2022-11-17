@@ -30,9 +30,13 @@ function Board() {
     setActiveLightSource(activeLightSource);
   };
 
-  const [boxSize, setBoxSize] = useState<number>(BOX_SIZE);
-  const handleBoxSizeChange = (newValue: number) => {
-    setBoxSize(newValue);
+  const [boxWidth, setBoxWidth] = useState<number>(BOX_SIZE);
+  const handleBoxWidthChange = (newValue: number) => {
+    setBoxWidth(newValue);
+  };
+  const [boxHeight, setBoxHeight] = useState<number>(BOX_SIZE);
+  const handleBoxHeightChange = (newValue: number) => {
+    setBoxHeight(newValue);
   };
 
   const [shadowBlur, setShadowBlur] = useState<number>(SHADOW_DISTANCE * 2);
@@ -109,8 +113,10 @@ function Board() {
           onNeumorphismShapeChange={handleNeumorphismShapeChange}
           activeLightSource={activeLightSource}
           onActiveLightSourceChange={handleActiveLightSourceChange}
-          boxSize={boxSize}
-          onBoxSizeChange={handleBoxSizeChange}
+          boxWidth={boxWidth}
+          onBoxWidthChange={handleBoxWidthChange}
+          boxHeight={boxHeight}
+          onBoxHeightChange={handleBoxHeightChange}
           shadowDistance={shadowDistance}
           onShadowDistanceChange={handleShadowDistanceChange}
           shadowBlur={shadowBlur}
@@ -127,14 +133,17 @@ function Board() {
       <div className="flex flex-1 flex-col justify-center">
         <Preview
           previewType={previewType}
-          color={color}
-          neumorphismShape={neumorphismShape}
-          activeLightSource={activeLightSource}
-          boxSize={boxSize}
-          shadowDistance={shadowDistance}
-          shadowBlur={shadowBlur}
-          borderRadius={borderRadius}
-          colorDifference={colorDifference}
+          pannelProps={{
+            boxWidth,
+            boxHeight,
+            color,
+            neumorphismShape,
+            activeLightSource,
+            shadowDistance,
+            shadowBlur,
+            borderRadius,
+            colorDifference
+          }}
         />
       </div>
     </div>

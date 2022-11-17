@@ -10,8 +10,10 @@ export interface SidebarProps extends NeumorphismStyleParams {
   onColorChange: (colorHex: string) => void
   styleForReactString: string
   styleForCssString: string
-  boxSize?: number
-  onBoxSizeChange?: (newValue: number) => void
+  boxWidth?: number
+  onBoxWidthChange?: (newValue: number) => void
+  boxHeight?: number
+  onBoxHeightChange?: (newValue: number) => void
   onNeumorphismShapeChange?: (neumorphismShape: NeumorphismShapeType) => void
   onActiveLightSourceChange?: (activeLightSource: NeumorphismActiveLightSourceType) => void
   onShadowDistanceChange?: (newValue: number) => void
@@ -20,8 +22,10 @@ export interface SidebarProps extends NeumorphismStyleParams {
   onColorDifferenceChange?: (newValue: number) => void
 }
 export default function Sidebar({ color, onColorChange, styleForReactString, styleForCssString,
-  boxSize,
-  onBoxSizeChange,
+  boxWidth,
+  onBoxWidthChange,
+  boxHeight,
+  onBoxHeightChange,
   neumorphismShape,
   onNeumorphismShapeChange,
   activeLightSource,
@@ -93,7 +97,8 @@ export default function Sidebar({ color, onColorChange, styleForReactString, sty
           ]}
           onChange={onNeumorphismShapeChange}
         />
-        <ValueSlider label="Box Size" value={boxSize} onChange={onBoxSizeChange} max={500} />
+        <ValueSlider label="Box Width" value={boxWidth} onChange={onBoxWidthChange} max={500} />
+        <ValueSlider label="Box Height" value={boxHeight} onChange={onBoxHeightChange} max={500} />
         <ValueSlider label="Shadow Distance" value={shadowDistance} onChange={onShadowDistanceChange} max={shadowDistanceMax} />
         <ValueSlider label="Shadow Blur" value={shadowBlur} onChange={onShadowBlurChange} max={shadowBlurMax} />
         <ValueSlider label="Border Radius" value={borderRadius} onChange={onBorderRadiusChange} max={BORDER_RADIUS_MAX} />
