@@ -1,9 +1,7 @@
+import { MuiComponentType } from 'neumorphism-materialui-theme';
 import { ISidebarMenuGroup, ISidebarMenuItem } from '@/components/TreeMenu/menuIcons';
 
 // ------------------------------- sidebar menu -----------------------------------------------
-export enum MuiComponentType {
-  MuiButton = 'MuiButton'
-}
 
 export function valueOfMuiComponentType() {
   return MuiComponentType.MuiButton;

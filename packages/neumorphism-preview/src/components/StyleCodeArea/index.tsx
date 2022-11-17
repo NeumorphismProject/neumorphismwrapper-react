@@ -5,20 +5,23 @@ import TypeRadioGroup from '@/components/TypeRadioGroup';
 export interface StyleCodeAreaProps {
   styleForReactString: string
   styleForCssString: string
+  configurationString: string
 }
-export default function StyleCodeArea({ styleForReactString, styleForCssString }: StyleCodeAreaProps) {
-  const [styleCodeType, setStyleCodeType] = useState<StyleCodeType>(StyleCodeType.reactStyle);
+export default function StyleCodeArea({ styleForReactString, styleForCssString, configurationString }: StyleCodeAreaProps) {
+  const [styleCodeType, setStyleCodeType] = useState<StyleCodeType | 'configurationString'>(StyleCodeType.reactStyle);
   const handleStyleCodeTypeChange = (newValue: any) => {
-    setStyleCodeType(parseInt(newValue, 10));
+    setStyleCodeType(newValue);
   };
   const codeString = useMemo(() => {
     switch (styleCodeType) {
       case StyleCodeType.css:
         return styleForCssString;
+      case 'configurationString':
+        return configurationString;
       default: // StyleCodeType.reactStyle
         return styleForReactString;
     }
-  }, [styleCodeType, styleForReactString, styleForCssString]);
+  }, [styleCodeType, styleForReactString, styleForCssString, configurationString]);
   return (
     <div className="h-full w-full">
       <TypeRadioGroup
@@ -26,7 +29,8 @@ export default function StyleCodeArea({ styleForReactString, styleForCssString }
         value={styleCodeType}
         options={[
           { radioKey: StyleCodeType.reactStyle, radioText: 'React Style' },
-          { radioKey: StyleCodeType.css, radioText: 'CSS' }
+          { radioKey: StyleCodeType.css, radioText: 'CSS' },
+          { radioKey: 'configurationString', radioText: 'Configuration' }
         ]}
         onChange={handleStyleCodeTypeChange}
       />

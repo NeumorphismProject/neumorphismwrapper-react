@@ -88,25 +88,22 @@ export default function TreeMenu({
     return {};
   });
 
-  const handleFatherClick = React.useCallback(
-    (hasChildren: boolean, nodeId: string, nodeItem: ISidebarMenuItem) => {
-      if (hasChildren) {
-        setItemOpenVal((prev: any) => {
-          const newVal: any = {};
-          newVal[nodeId] = !_.get(prev, nodeId, false);
-          return {
-            ...prev,
-            ...newVal
-          };
-        });
-      } else {
-        setSelectedNodeId(nodeId);
-        setSelectedChildNodeId('');
-        onSelected({ nodeItem });
-      }
-    },
-    []
-  );
+  const handleFatherClick = (hasChildren: boolean, nodeId: string, nodeItem: ISidebarMenuItem) => {
+    if (hasChildren) {
+      setItemOpenVal((prev: any) => {
+        const newVal: any = {};
+        newVal[nodeId] = !_.get(prev, nodeId, false);
+        return {
+          ...prev,
+          ...newVal
+        };
+      });
+    } else {
+      setSelectedNodeId(nodeId);
+      setSelectedChildNodeId('');
+      onSelected({ nodeItem });
+    }
+  };
 
   const handleChildClick = React.useCallback(
     (

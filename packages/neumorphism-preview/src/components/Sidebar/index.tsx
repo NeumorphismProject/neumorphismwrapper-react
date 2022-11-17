@@ -10,6 +10,7 @@ export interface SidebarProps extends NeumorphismStyleParams {
   onColorChange: (colorHex: string) => void
   styleForReactString: string
   styleForCssString: string
+  configurationString: string
   boxWidth?: number
   onBoxWidthChange?: (newValue: number) => void
   boxHeight?: number
@@ -21,7 +22,7 @@ export interface SidebarProps extends NeumorphismStyleParams {
   onBorderRadiusChange?: (newValue: number) => void
   onColorDifferenceChange?: (newValue: number) => void
 }
-export default function Sidebar({ color, onColorChange, styleForReactString, styleForCssString,
+export default function Sidebar({ color, onColorChange, styleForReactString, styleForCssString, configurationString,
   boxWidth,
   onBoxWidthChange,
   boxHeight,
@@ -71,6 +72,7 @@ export default function Sidebar({ color, onColorChange, styleForReactString, sty
         <StyleCodeArea
           styleForReactString={styleForReactString}
           styleForCssString={styleForCssString}
+          configurationString={configurationString}
         />
       </div>
       {/* ------ silder ------ */}
