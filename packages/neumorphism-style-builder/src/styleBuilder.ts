@@ -55,6 +55,17 @@ function getActiveLightSource(activeLightSource: NeumorphismActiveLightSourceTyp
   }
 }
 
+export interface NeumorphismCssStyle {
+  ['border-radius']: string
+  background: string
+  ['box-shadow']: string
+}
+export interface NeumorphismReactStyle {
+  borderRadius: string
+  background: string
+  boxShadow: string
+}
+
 export enum StyleCodeType {
   css = 1,
   reactStyle = 2
@@ -79,7 +90,7 @@ export function getNeumorphismStyle({
   shadowBlur,
   borderRadius = BORDER_RADIUS,
   borderRadiusMax = BORDER_RADIUS_MAX,
-  colorDifference = COLOR_DIFFERENCE }: NeumorphismStyleParams) {
+  colorDifference = COLOR_DIFFERENCE }: NeumorphismStyleParams): NeumorphismCssStyle | NeumorphismReactStyle {
   // const
   // const maxRadius = 150;
   // const colorDifference = 0.15;

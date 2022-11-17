@@ -1,47 +1,73 @@
-import { useState, useMemo, createContext } from 'react';
+import { useState, useMemo, createContext, ReactNode } from 'react';
 // material
 import { CssBaseline } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {
+  Theme,
   ThemeProvider as MUIThemeProvider,
   createTheme,
-  StyledEngineProvider
+  StyledEngineProvider,
+  ThemeOptions
 } from '@mui/material/styles';
+import { NeumorphismStyleParams, NeumorphismReactStyle, StyleCodeType, NeumorphismShapeType, getNeumorphismStyle } from 'neumorphism-style-builder';
 // components overrides
-import componentsOverride from './overrides';
+import componentsOverride, { NeumorphismStyles } from './overrides';
 
 export type ThemeMode = 'dark' | 'light';
+export interface MuiThemeNeumorphismProps extends Omit<NeumorphismStyleParams, 'styleCodeType' | 'neumorphismShape'> {
+  boxWidth?: number
+  boxHeight?: number
+}
 
-export const ColorModeContext = createContext({ toggleColorMode: () => { } });
+export const NeumorphismMuiThemeContext = createContext({
+  toggleColorMode: () => { },
+  toggleNeumorphismProps: (neuProps: MuiThemeNeumorphismProps) => { }
+});
 
-export function ThemeProvider({ children }: any) {
+export interface ThemeProviderProps {
+  children?: ReactNode
+}
+export function ThemeProvider({ children }: ThemeProviderProps) {
   // get system theme type
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [mode, setMode] = useState<ThemeMode>(prefersDarkMode ? 'dark' : 'light');
-  const colorMode = useMemo(
+  const [neuProps, setNeuProps] = useState<MuiThemeNeumorphismProps>({ color: '#000000' });
+  const themeValue = useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+      toggleNeumorphismProps: (neuProps: MuiThemeNeumorphismProps) => {
+        setNeuProps(neuProps);
       }
     }),
     []
   );
 
-  const theme: any = useMemo(
+  const neuStyles = useMemo((): NeumorphismStyles => ({
+    boxWidth: neuProps.boxWidth,
+    boxHeight: neuProps.boxHeight,
+    flat: getNeumorphismStyle({ ...neuProps, styleCodeType: StyleCodeType.reactStyle, neumorphismShape: NeumorphismShapeType.flat }) as NeumorphismReactStyle,
+    pressed: getNeumorphismStyle({ ...neuProps, styleCodeType: StyleCodeType.reactStyle, neumorphismShape: NeumorphismShapeType.pressed }) as NeumorphismReactStyle,
+    concave: getNeumorphismStyle({ ...neuProps, styleCodeType: StyleCodeType.reactStyle, neumorphismShape: NeumorphismShapeType.concave }) as NeumorphismReactStyle,
+    convex: getNeumorphismStyle({ ...neuProps, styleCodeType: StyleCodeType.reactStyle, neumorphismShape: NeumorphismShapeType.convex }) as NeumorphismReactStyle
+  }), [neuProps]);
+
+  const theme: Partial<Theme> = useMemo(
     () => createTheme({
-      components: componentsOverride()
-    } as any),
-    [mode]
+      components: componentsOverride(neuStyles)
+    } as ThemeOptions),
+    [mode, neuStyles]
   );
 
   return (
     <StyledEngineProvider injectFirst>
-      <ColorModeContext.Provider value={colorMode}>
+      <NeumorphismMuiThemeContext.Provider value={themeValue}>
         <MUIThemeProvider theme={theme}>
           <CssBaseline />
           {children}
         </MUIThemeProvider>
-      </ColorModeContext.Provider>
+      </NeumorphismMuiThemeContext.Provider>
     </StyledEngineProvider>
   );
 }

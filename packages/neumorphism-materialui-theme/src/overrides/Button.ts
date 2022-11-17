@@ -1,16 +1,18 @@
-import { Theme } from '@mui/material/styles';
-import { getNeumorphismStyle } from 'neumorphism-style-builder';
+import { Theme, Components } from '@mui/material/styles';
+import { NeumorphismStyles } from './types';
 
-export default function Button() {
+export default function Button(neuStyles: NeumorphismStyles): Components<Omit<Theme, 'components'>> {
+  const { boxWidth, boxHeight } = neuStyles;
   return {
     MuiButton: {
       styleOverrides: {
         root: ({ theme }: { theme: Theme }) => {
-          const neuObj = getNeumorphismStyle({ color: '#27282b' });
           return {
-            ...neuObj.flat,
+            width: boxWidth,
+            height: boxHeight,
+            ...neuStyles.flat,
             '&:hover': {
-              ...neuObj.pressed
+              ...neuStyles.pressed
             }
           };
         }

@@ -1,7 +1,11 @@
+import { Components } from '@mui/material/styles';
+import { NeumorphismStyles } from './types';
 import Button from './Button';
 
-export default function ComponentsOverrides() {
+export * from './types';
+
+export default function ComponentsOverrides(neuStyles: NeumorphismStyles): Components {
   return Object.assign(
-    Button()
+    Button(neuStyles)
   );
 }
