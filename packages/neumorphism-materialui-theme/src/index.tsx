@@ -21,6 +21,7 @@ export type ThemeMode = 'dark' | 'light';
 export interface MuiThemeNeumorphismProps extends Omit<NeumorphismStyleParams, 'styleCodeType' | 'neumorphismShape'> {
   boxWidth?: number
   boxHeight?: number
+  frontColor?: string
 }
 
 export const NeumorphismMuiThemeContext = createContext({
@@ -53,6 +54,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       return {
         boxWidth: neuProps.boxWidth,
         boxHeight: neuProps.boxHeight,
+        frontColor: neuProps.frontColor,
         flat: getNeumorphismStyle({ ...neuProps, styleCodeType: StyleCodeType.reactStyle, neumorphismShape: NeumorphismShapeType.flat }) as NeumorphismReactStyle,
         pressed: getNeumorphismStyle({ ...neuProps, styleCodeType: StyleCodeType.reactStyle, neumorphismShape: NeumorphismShapeType.pressed }) as NeumorphismReactStyle,
         concave: getNeumorphismStyle({ ...neuProps, styleCodeType: StyleCodeType.reactStyle, neumorphismShape: NeumorphismShapeType.concave }) as NeumorphismReactStyle,
