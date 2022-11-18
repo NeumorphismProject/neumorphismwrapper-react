@@ -3,6 +3,7 @@ import { NeumorphismStyleParams, NeumorphismActiveLightSourceType, NeumorphismRe
 export interface NeumorphismStyles {
   boxWidth?: number
   boxHeight?: number
+  frontColor?: string
   flat: NeumorphismReactStyle
   pressed: NeumorphismReactStyle
   concave: NeumorphismReactStyle

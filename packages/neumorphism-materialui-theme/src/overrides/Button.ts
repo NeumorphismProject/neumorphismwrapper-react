@@ -28,7 +28,7 @@ export const prettyMuiButtonNeumorphismStyles: NeumorphismStyles = {
 
 export default function Button(neuStyles?: NeumorphismStyles): Components<Omit<Theme, 'components'>> {
   const neuStylesVal = (neuStyles || prettyMuiButtonNeumorphismStyles) as any;
-  const { boxWidth, boxHeight } = neuStylesVal;
+  const { boxWidth, boxHeight, frontColor } = neuStylesVal;
   return {
     MuiButton: {
       styleOverrides: {
@@ -36,6 +36,7 @@ export default function Button(neuStyles?: NeumorphismStyles): Components<Omit<T
           return {
             width: boxWidth,
             height: boxHeight,
+            color: frontColor,
             ...neuStylesVal.flat,
             '&:hover': {
               ...neuStylesVal.pressed
