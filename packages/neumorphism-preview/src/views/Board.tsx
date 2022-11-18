@@ -16,15 +16,24 @@ import UiSelector from '@/components/UiSelector';
 import { ISelectedAppMenuItem } from '@/components/TreeMenu';
 import { PreviewComponentType } from '@/components/UiSelector/menu';
 
-export interface ResetConfigurationParams extends MuiComponentDefaultSize, NeumorphismStyleParams { }
+export interface ResetConfigurationParams extends MuiComponentDefaultSize, NeumorphismStyleParams {
+  frontColor?: string
+}
 
 function Board() {
-  let configurationRecorder: any = {};
+  const configurationRecorder: any = {};
 
   const [color, setColor] = useState<string>('#27282b');
-  const handleColorChange = (colorHex: string) => {
+  const handleBackgroundColorChange = (colorHex: string) => {
     if (isValidColor(colorHex)) {
       setColor(colorHex);
+    }
+  };
+
+  const [frontColor, setFrontColor] = useState<string>('#ffffff');
+  const handleFrontColorChange = (colorHex: string) => {
+    if (isValidColor(colorHex)) {
+      setFrontColor(colorHex);
     }
   };
 
@@ -92,6 +101,7 @@ function Board() {
     boxWidth,
     boxHeight,
     color,
+    frontColor,
     neumorphismShape,
     activeLightSource,
     shadowDistance,
@@ -101,6 +111,7 @@ function Board() {
   }), [boxWidth,
     boxHeight,
     color,
+    frontColor,
     neumorphismShape,
     activeLightSource,
     shadowDistance,
@@ -118,46 +129,74 @@ function Board() {
       boxWidth,
       boxHeight,
       color,
+      frontColor,
       shadowDistance,
       shadowBlur,
       borderRadius,
       colorDifference
     } = configuration;
     if (boxWidth) {
-      setBoxWidth(boxWidth);
+      setBoxWidth((prev:any) => {
+        configurationRecorder.boxWidth = prev;
+        return boxWidth;
+      });
     }
     if (boxHeight) {
-      setBoxHeight(boxHeight);
+      setBoxHeight((prev:any) => {
+        configurationRecorder.boxHeight = prev;
+        return boxHeight;
+      });
     }
     if (color) {
-      setColor(color);
+      setColor((prev:any) => {
+        configurationRecorder.color = prev;
+        return color;
+      });
+    }
+    if (frontColor) {
+      setFrontColor((prev:any) => {
+        configurationRecorder.frontColor = prev;
+        return frontColor;
+      });
     }
     if (shadowDistance) {
-      setShadowDistance(shadowDistance);
+      setShadowDistance((prev:any) => {
+        configurationRecorder.shadowDistance = prev;
+        return shadowDistance;
+      });
     }
     if (shadowBlur) {
-      setShadowBlur(shadowBlur);
+      setShadowBlur((prev:any) => {
+        configurationRecorder.shadowBlur = prev;
+        return shadowBlur;
+      });
     }
     if (borderRadius) {
-      setBorderRadius(borderRadius);
+      setBorderRadius((prev:any) => {
+        configurationRecorder.borderRadius = prev;
+        return borderRadius;
+      });
     }
     if (colorDifference) {
-      setColorDifferenceVal(colorDifference * 100);
+      setColorDifferenceVal((prev:any) => {
+        configurationRecorder.colorDifference = prev / 100;
+        return colorDifference * 100;
+      });
     }
   }
   const [previewType, setPreviewType] = useState<PreviewComponentType | MuiComponentType>(PreviewComponentType.NormalBox);
   const handleMuiComponentsSelected = useCallback((selectedItem: ISelectedAppMenuItem) => {
-    configurationRecorder = {
-      boxWidth,
-      boxHeight,
-      color,
-      neumorphismShape,
-      activeLightSource,
-      shadowDistance,
-      shadowBlur,
-      borderRadius,
-      colorDifference
-    };
+    // configurationRecorder = {
+    //   boxWidth,
+    //   boxHeight,
+    //   color,
+    //   neumorphismShape,
+    //   activeLightSource,
+    //   shadowDistance,
+    //   shadowBlur,
+    //   borderRadius,
+    //   colorDifference
+    // };
     let previewType: any;
     if (selectedItem.childItem && Object.keys(selectedItem.childItem).length > 0) {
       previewType = selectedItem.childItem.nodeId;
@@ -187,8 +226,10 @@ function Board() {
       </div>
       <div className="h-full w-96" style={neumorphismStyle}>
         <Sidebar
-          color={color}
-          onColorChange={handleColorChange}
+          backgroundColor={color}
+          onBackgroundColorChange={handleBackgroundColorChange}
+          frontColor={frontColor}
+          onFrontColorChange={handleFrontColorChange}
           styleForReactString={styleForReactString}
           styleForCssString={styleForCssString}
           configurationString={configurationString}

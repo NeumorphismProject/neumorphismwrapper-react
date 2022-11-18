@@ -1,13 +1,17 @@
 import { useMemo } from 'react';
 import { NeumorphismStyleParams, NeumorphismShapeType, NeumorphismActiveLightSourceType, BORDER_RADIUS_MAX } from 'neumorphism-pannel';
+import ColorPicker from '@/components/ColorPicker';
 import ValueSlider from '@/components/ValueSlider';
 import TypeRadioGroup from '@/components/TypeRadioGroup';
 import StyleCodeArea from '@/components/StyleCodeArea';
 
 const shadowDistanceMax = 100;
 
-export interface SidebarProps extends NeumorphismStyleParams {
-  onColorChange: (colorHex: string) => void
+export interface SidebarProps extends Omit<NeumorphismStyleParams, 'color'> {
+  backgroundColor: string
+  onBackgroundColorChange: (colorHex: string) => void
+  frontColor: string
+  onFrontColorChange: (colorHex: string) => void
   styleForReactString: string
   styleForCssString: string
   configurationString: string
@@ -22,7 +26,8 @@ export interface SidebarProps extends NeumorphismStyleParams {
   onBorderRadiusChange?: (newValue: number) => void
   onColorDifferenceChange?: (newValue: number) => void
 }
-export default function Sidebar({ color, onColorChange, styleForReactString, styleForCssString, configurationString,
+export default function Sidebar({ backgroundColor, onBackgroundColorChange, frontColor, onFrontColorChange,
+  styleForReactString, styleForCssString, configurationString,
   boxWidth,
   onBoxWidthChange,
   boxHeight,
@@ -39,36 +44,23 @@ export default function Sidebar({ color, onColorChange, styleForReactString, sty
   onBorderRadiusChange,
   colorDifference,
   onColorDifferenceChange }: SidebarProps) {
-  const handleColorChange = (e: any) => {
-    onColorChange(e.target.value);
-  };
   const shadowBlurMax = useMemo(() => (shadowDistanceMax || 0) * 2, [shadowDistanceMax]);
   return (
     <div className="flex h-full w-full flex-col overflow-y-auto p-8 text-white">
-      <div className="h-16 bg-black p-2">
-        <div className="font-bold">Pick a color</div>
-        <div>
-          <input
-            className="relative top-1 mr-2"
-            type="color"
-            name="color"
-            onChange={handleColorChange}
-            placeholder="#ffffff"
-            value={color}
-            id="color"
-          />
-          <input
-            className="bg-black"
-            type="text"
-            placeholder="#ffffff"
-            name="color"
-            onChange={handleColorChange}
-            value={color}
-          />
-        </div>
+      <div className="h-60 bg-black p-2">
+        <ColorPicker
+          title="Pick background color"
+          color={backgroundColor}
+          onColorChange={onBackgroundColorChange}
+        />
+        <ColorPicker
+          title="Pick front Color"
+          color={frontColor}
+          onColorChange={onFrontColorChange}
+        />
       </div>
       {/* ------ style code textarea ------ */}
-      <div className="mb-6 w-full">
+      <div className="mb-6 w-full bg-black">
         <StyleCodeArea
           styleForReactString={styleForReactString}
           styleForCssString={styleForCssString}
