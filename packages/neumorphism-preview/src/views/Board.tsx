@@ -186,17 +186,6 @@ function Board() {
   }
   const [previewType, setPreviewType] = useState<PreviewComponentType | MuiComponentType>(PreviewComponentType.NormalBox);
   const handleMuiComponentsSelected = useCallback((selectedItem: ISelectedAppMenuItem) => {
-    // configurationRecorder = {
-    //   boxWidth,
-    //   boxHeight,
-    //   color,
-    //   neumorphismShape,
-    //   activeLightSource,
-    //   shadowDistance,
-    //   shadowBlur,
-    //   borderRadius,
-    //   colorDifference
-    // };
     let previewType: any;
     if (selectedItem.childItem && Object.keys(selectedItem.childItem).length > 0) {
       previewType = selectedItem.childItem.nodeId;

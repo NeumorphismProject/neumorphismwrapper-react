@@ -4,7 +4,8 @@ import { NeumorphismStyles, MuiComponentDefaultSize } from './types';
 
 export const muiButtonDefaultSize: MuiComponentDefaultSize = {
   boxWidth: 286,
-  boxHeight: 50
+  boxHeight: 50,
+  frontColor: '#FFFFFF'
 };
 
 export const muiButtonPrettyConfiguration: NeumorphismStyleParams = {

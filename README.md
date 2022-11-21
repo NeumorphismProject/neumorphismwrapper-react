@@ -16,6 +16,25 @@ cd neumorphism-preview
 yarn dev
 ```
 
+## Packages Dependency
+
+* if you want to use 'neumorphism-style-builder'
+```shell
+yarn add neumorphism-style-builder
+```
+
+* if you want to use 'neumorphism-pannel'
+```shell
+yarn add neumorphism-style-builder neumorphism-pannel
+```
+
+* if you want to use 'neumorphism-materialui-theme'
+```shell
+yarn add neumorphism-style-builder neumorphism-materialui-theme
+```
+
+* 'neumorphism-style-builder' is the base dependency
+
 ## Git Rules
 
 * [1] -- Branch Rule (branchnamelint.json)

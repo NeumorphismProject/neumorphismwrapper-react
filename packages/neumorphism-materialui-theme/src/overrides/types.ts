@@ -13,4 +13,5 @@ export interface NeumorphismStyles {
 export interface MuiComponentDefaultSize {
   boxWidth?: number
   boxHeight?: number
+  frontColor?: string
 }
